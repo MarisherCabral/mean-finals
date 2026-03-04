@@ -1,0 +1,63 @@
+<div class="container">
+  <h2>🏋️ Fitness Tracker</h2>
+
+  <!-- Add New Exercise Form -->
+  <div class="form-group">
+    <div class="input-wrapper">
+      <label for="exerciseName">Exercise Name</label>
+      <input id="exerciseName" [(ngModel)]="newExercise.exerciseName" placeholder="Push-Ups" class="form-control" />
+    </div>
+
+    <div class="input-wrapper">
+      <label for="type">Type</label>
+      <select id="type" [(ngModel)]="newExercise.type" class="form-control">
+        <option value="Cardio">Cardio 🏃</option>
+        <option value="Strength">Strength 🏋️</option>
+      </select>
+    </div>
+
+    <div class="input-wrapper">
+      <label for="duration">Duration (minutes)</label>
+      <input type="number" id="duration" [(ngModel)]="newExercise.duration" placeholder="15" class="form-control" />
+    </div>
+
+    <div class="input-wrapper">
+      <label for="calories">Calories Burned</label>
+      <input type="number" id="calories" [(ngModel)]="newExercise.caloriesBurned" placeholder="100" class="form-control" />
+    </div>
+
+    <button class="btn" (click)="addExercise()">Add Exercise</button>
+  </div>
+
+  <hr />
+
+  <!-- Display All Exercises -->
+  <div *ngIf="exercises.length > 0; else noExercises">
+    <table>
+      <thead>
+        <tr>
+          <th>Exercise Name</th>
+          <th>Type</th>
+          <th>Duration (min)</th>
+          <th>Calories Burned</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let exercise of exercises; trackBy: trackById" [ngClass]="exercise.type === 'Cardio' ? 'cardio-row' : 'strength-row'">
+          <td>{{ exercise.exerciseName }}</td>
+          <td>{{ exercise.type }}</td>
+          <td>{{ exercise.duration }}</td>
+          <td>{{ exercise.caloriesBurned }}</td>
+          <td>
+            <button class="btn delete" (click)="deleteExercise(exercise.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #noExercises>
+    <p>No exercises available</p>
+  </ng-template>
+</div>
